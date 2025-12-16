@@ -32,6 +32,8 @@ class QmsController extends Controller
             'type' => 'required|string',
             'file_path' => 'required|file|mimes:pdf,doc,docx,xlsx,xls,ppt,pptx',
         ]);
+   
+
 
         // Upload file
         $fileName = time() . '_' . $request->file('file_path')->getClientOriginalName();
