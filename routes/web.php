@@ -185,6 +185,9 @@ Route::get('audit', function () {
 Route::get('info', function () {
     return view('pelanggan.info.index');
 })->name('info');
+Route::get('info', function () {
+    return view('pelanggan.info.index');
+})->name('info');
 
 
 require __DIR__ . '/auth.php';
