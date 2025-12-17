@@ -18,7 +18,7 @@
 
     <!-- Menu khusus Manajemen -->
     @if (auth()->user()->role === 'manajemen')
-        <a href=" {{ route('pelanggan.index') }}"
+        <a href="{{ route('pelanggan.index') }}"
             class="{{ request()->routeIs('pelanggan.*') ? 'bg-blue-600 text-white' : '' }}">
             <i class="fa-solid fa-users mr-2"></i> Manajemen Pelanggan
         </a>
@@ -40,6 +40,13 @@
     <a href="{{ route('certificates.index') }}"
         class="{{ request()->routeIs('certificates.*') ? 'bg-blue-600 text-white' : '' }}">
         <i class="fa-solid fa-certificate mr-2"></i> Manajemen Sertifikat
+    </a>
+    <hr class="bg-light my-3">
+
+    <!-- Tambahan: Menu Info -->
+    <a href="{{ route('infos.index') }}"
+        class="{{ request()->routeIs('infos.*') ? 'bg-blue-600 text-white' : '' }}">
+        <i class="fa-solid fa-circle-info mr-2"></i> Manajemen Info
     </a>
     <hr class="bg-light my-3">
 

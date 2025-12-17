@@ -3,17 +3,6 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -83,6 +72,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EngineeringOrderController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\InfoController;
 
 // === Group umum: admin, manajemen, inspektor ===
 Route::middleware(['auth', 'exclude.pelanggan'])->group(function () {
@@ -91,6 +81,8 @@ Route::middleware(['auth', 'exclude.pelanggan'])->group(function () {
     Route::resource('aircraft-programs', AircraftProgramController::class);
     Route::resource('tasks', TaskController::class);
     Route::resource('companies', CompanyController::class);
+    Route::resource('infos', InfoController::class);
+
 
     // Engineering Orders nested di Aircraft Program
     Route::prefix('aircraft-programs/{aircraftProgramId}')->group(function () {
@@ -108,6 +100,9 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('users', UserController::class);
     Route::patch('users/{id}/toggle-active', [UserController::class, 'toggleActive'])->name('users.toggleActive');
     Route::get('users/{id}/detail', [UserController::class, 'detail'])->name('users.detail');
+});
+Route::prefix('admin')->middleware(['auth','role:admin'])->group(function () {
+    Route::resource('users', UserController::class);
 });
 use App\Http\Controllers\Manajemen\PelangganController;
 
@@ -181,13 +176,13 @@ Route::get('audit', function () {
     return view('pelanggan.audit.index');
 })->name('audit');
 
-// Info page
+use App\Models\Info;
+
 Route::get('info', function () {
-    return view('pelanggan.info.index');
+    $infos = Info::latest()->paginate(9);
+    return view('pelanggan.info.index', compact('infos'));
 })->name('info');
-Route::get('info', function () {
-    return view('pelanggan.info.index');
-})->name('info');
+
 
 
 require __DIR__ . '/auth.php';

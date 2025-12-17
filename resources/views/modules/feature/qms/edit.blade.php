@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.' . auth()->user()->role)
 
 @section('page-title', 'Edit Dokumen QMS')
 
