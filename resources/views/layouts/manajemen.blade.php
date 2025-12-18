@@ -15,8 +15,7 @@
 <!-- Select2 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-<!-- Trix Editor CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/2.0.0/trix.css" />
+
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 <title>Admin @yield('title')</title>
@@ -35,8 +34,6 @@
 <!-- Alpine.js -->
 <script src="//unpkg.com/alpinejs" defer></script>
 
-<!-- Trix Editor JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/2.0.0/trix.js"></script>
 
     <style>
         :root {

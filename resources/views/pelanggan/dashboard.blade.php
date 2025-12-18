@@ -1,5 +1,6 @@
 @extends('layouts.pelanggan')
 
+@section('title', 'Dashboard')
 @section('content')
     <!-- Notifikasi -->
 
