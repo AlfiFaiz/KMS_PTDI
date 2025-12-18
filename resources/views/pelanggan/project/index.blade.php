@@ -1,5 +1,6 @@
 @extends('layouts.pelanggan')
 
+@section('title', 'Project')
 @section('content')
     <div class="bg-cover bg-center min-h-screen" style="background-image: url('{{ asset('images/hanggar.png') }}');">
         <div class="container mx-auto px-4 md:px-6 lg:px-12 py-12">

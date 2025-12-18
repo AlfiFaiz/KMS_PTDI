@@ -9,7 +9,7 @@
 
 <div class="mb-4">
     <label for="content" class="block text-sm font-medium text-gray-700">Konten</label>
-    <input id="content" type="hidden" name="content" value="{{ old('content', $info->content ?? '') }}">
+    <input id="content" type="hidden" name="content" value="{{ old('content', $info->content ?? '') }}" class="text-black focus:text-black focus:bg-white">
     <trix-editor input="content"></trix-editor>
 </div>
 
@@ -30,8 +30,3 @@
     Simpan
 </button>
 
-{{-- Tambahkan ini di layout atau di bawah form --}}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/2.0.0/trix.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/2.0.0/trix.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="/path/to/select2.min.js"></script>

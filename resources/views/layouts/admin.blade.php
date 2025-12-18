@@ -15,8 +15,8 @@
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-    <!-- Trix Editor CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/2.0.0/trix.css" />
+
+
 
 
     <!-- Tailwind + Vite build -->
@@ -70,8 +70,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-doughnutlabel"></script>
 
-    <!-- Trix Editor JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/2.0.0/trix.js"></script>
+
+
 
     <!-- Alpine.js -->
     <script src="//unpkg.com/alpinejs" defer></script>
