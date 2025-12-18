@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KMS - Quality & Safety</title>
-      <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-doughnutlabel"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,7 +20,8 @@
     @include('layouts.navbar')
 
     <!-- Hero Section -->
-    <div class="bg-cover bg-center min-h-screen" style="background-image: url('{{ asset('images/hanggar.png') }}');">
+<div class="bg-cover bg-center min-h-screen" style="background-image: url('{{ asset('images/hanggar.png') }}');">
+    <div class="bg-black bg-opacity-50 min-h-screen flex flex-col items-center justify-start py-10">
         <div class="flex items-center justify-center min-h-screen text-center px-4">
             <div class="max-w-5xl text-white">
                <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white text-center"

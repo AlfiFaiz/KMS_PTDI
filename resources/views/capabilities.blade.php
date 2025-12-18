@@ -18,6 +18,7 @@
     <!-- Include Navbar -->
     @include('layouts.navbar')
 <div class="bg-cover bg-center min-h-screen" style="background-image: url('{{ asset('images/hanggar.png') }}');">
+    <div class="bg-black bg-opacity-50 min-h-screen flex flex-col items-center justify-start py-10">
   <div class="container mx-auto px-4 md:px-6 lg:px-12 py-12">
         <h1 class="text-center text-white text-2xl sm:text-3xl md:text-4xl font-bold uppercase mb-8">
             CAPABILITIES

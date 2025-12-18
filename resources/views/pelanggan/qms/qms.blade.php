@@ -4,6 +4,7 @@
 @section('title', 'QMS - ' . optional($qms->first())->type)
 @section('content')
 <div class="bg-cover bg-center min-h-screen" style="background-image: url('{{ asset('images/hanggar.png') }}');">
+    <div class="bg-black bg-opacity-50 min-h-screen flex flex-col items-center justify-start py-10">
     <div class="container mx-auto px-4 md:px-6 lg:px-12 py-12">
         <div class="mt-6 bg-white p-6 shadow rounded-lg">
             <h2 class="text-xl font-bold mb-4">Daftar QMS</h2>

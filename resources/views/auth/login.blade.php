@@ -1,8 +1,12 @@
 
 <x-guest-layout>
 
-    <div class="relative min-h-screen flex items-center justify-center bg-cover bg-center" 
-         style="background-image: url('{{ asset('images/hanggar.png') }}');">
+<div class="relative min-h-screen flex items-center justify-center bg-cover bg-center"  
+     style="background-image: url('{{ asset('images/hanggar.png') }}');">
+
+    <!-- Overlay warna gelap -->
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
         
         <!-- Overlay -->
         <div class="absolute inset-0 bg-white bg-opacity-40"></div>
