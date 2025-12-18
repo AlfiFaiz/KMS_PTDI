@@ -7,7 +7,7 @@
 
             <!-- Judul -->
             <div class="text-center mt-4 text-white">
-                <h1 class="text-3xl font-extrabold">Work Package Summary for {{ $program->aircraft_type }}</h1>
+                <h1 class="text-3xl font-extrabold">Summary of Work Package for{{ $program->aircraft_type }}</h1>
                 <p class="text-lg">{{ $program->registration }} - {{ $program->company->name }}</p>
             </div>
 

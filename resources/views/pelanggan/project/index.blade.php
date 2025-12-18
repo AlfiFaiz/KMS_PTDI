@@ -59,7 +59,7 @@
                         <!-- Tombol Work Package Summary -->
                         <a href="{{ route('work-package.summary', $program->id) }}"
                             class="bg-green-600 text-white px-3 py-1 rounded-lg text-xs text-center hover:bg-green-700 flex-1">
-                            Work Package Summary
+                            Summary of Work Package
                         </a>
 
 
