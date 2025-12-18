@@ -54,7 +54,7 @@
                                 <span class="text-gray-500">Tidak ada gambar</span>
                             @endif
                         </td>
-                        <td class="p-2">
+                         <td class="p-2 flex flex-wrap gap-2">
                             <a href="{{ route('infos.edit', $info->id) }}"
                                class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">
                                 Edit

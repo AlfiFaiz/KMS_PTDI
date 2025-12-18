@@ -61,29 +61,26 @@
                             </div>
                             <small>{{ $finishedOrders }}/{{ $totalOrders }} selesai ({{ $progress }}%)</small>
                         </td>
-                        <td class="space-x-1">
-                            <a href="{{ route('aircraft-programs.edit', $p->id) }}"
-                                class="px-2 py-1 bg-yellow-500 text-white rounded">Edit</a>
+                        <td>
+    <div class="flex flex-wrap gap-2">
+        <a href="{{ route('aircraft-programs.edit', $p->id) }}"
+           class="px-2 py-1 bg-yellow-500 text-white rounded">Edit</a>
 
-                            <form action="{{ route('aircraft-programs.destroy', $p->id) }}" method="POST"
-                                class="inline-block" onsubmit="return confirm('Hapus program ini?')">
-                                @csrf @method('DELETE')
-                                <button class="px-2 py-1 bg-red-600 text-white rounded">Hapus</button>
-                            </form>
+        <form action="{{ route('aircraft-programs.destroy', $p->id) }}" method="POST"
+              onsubmit="return confirm('Hapus program ini?')">
+            @csrf @method('DELETE')
+            <button class="px-2 py-1 bg-red-600 text-white rounded">Hapus</button>
+        </form>
 
-                            <a href="{{ route('engineering-orders.index', $p->id) }}"
-                                class="px-2 py-1 bg-green-600 text-white rounded">Engineering Orders</a>
+        <a href="{{ route('engineering-orders.index', $p->id) }}"
+           class="px-2 py-1 bg-green-600 text-white rounded">Engineering Orders</a>
 
-                            <a href="{{ route('work-package.create', $p->id) }}"
-                                class="px-2 py-1 bg-indigo-600 text-white rounded">
-                                Summary of Work Package
-                            </a>
-
-
-
-
-
-                        </td>
+        <a href="{{ route('work-package.create', $p->id) }}"
+           class="px-2 py-1 bg-indigo-600 text-white rounded">
+           Summary of Work Package
+        </a>
+    </div>
+</td>
                     </tr>
                 @endforeach
             </tbody>

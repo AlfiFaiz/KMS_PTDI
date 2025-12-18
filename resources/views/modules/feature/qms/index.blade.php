@@ -54,7 +54,7 @@
                         <td class="p-2">{{ $q->date_issued }}</td>
                         <td class="p-2">{{ $q->rev }}</td>
                         <td class="p-2">{{ $q->type }}</td>
-                        <td class="p-2">
+                         <td class="p-2 flex flex-wrap gap-2">
                             <a href="{{ route('qms.edit', $q->id) }}"
                                 class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">
                                 Edit

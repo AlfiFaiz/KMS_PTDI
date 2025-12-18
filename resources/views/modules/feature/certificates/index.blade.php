@@ -37,7 +37,7 @@
                         <td class="p-2">{{ $c->judul }}</td>
                         <td class="p-2">{{ $c->date_issued }}</td>
                         <td class="p-2">{{ $c->issued_by }}</td>
-                        <td class="p-2">
+                        <td class="p-2 flex flex-wrap gap-2">
                             <a href="{{ route('certificates.edit', $c->id) }}"
                                 class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">
                                 Edit

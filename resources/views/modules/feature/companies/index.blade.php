@@ -30,7 +30,7 @@
                         <td class="border px-4 py-2">{{ $company->name }}</td>
                         <td class="border px-4 py-2">{{ $company->address }}</td>
                         <td class="border px-4 py-2">{{ $company->phone }}</td>
-                        <td class="border px-4 py-2">
+                         <td class="p-2 flex flex-wrap gap-2">
                             <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-sm btn-warning">Edit</a>
                             <form action="{{ route('companies.destroy', $company->id) }}" method="POST" class="inline">
                                 @csrf
