@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="bg-white p-6 rounded-xl shadow-md w-full max-w-xl">
+    <div class="bg-gray-50 p-6 rounded-xl shadow-md w-full max-w-xl">
 
         <h2 class="text-2xl font-bold text-blue-700 mb-4">Tambah Perusahaan</h2>
 

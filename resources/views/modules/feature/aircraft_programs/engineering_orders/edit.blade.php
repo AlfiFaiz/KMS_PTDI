@@ -4,7 +4,7 @@
 @section('page-title', 'Edit Engineering Order')
 
 @section('content')
-    <div class="bg-white p-6 rounded-xl shadow-md w-full max-w-4xl">
+    <div class="bg-gray-50 p-6 rounded-xl shadow-md w-full max-w-4xl">
         <h2 class="text-2xl font-bold text-blue-700 mb-4">
             Edit Engineering Order untuk {{ $program->program }}
         </h2>

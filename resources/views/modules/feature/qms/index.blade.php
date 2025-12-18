@@ -4,7 +4,7 @@
 
 @section('content')
     <br>
-    <div class="bg-white p-6 rounded-xl shadow-md">
+    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
 
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-2xl font-bold text-blue-700">Daftar Dokumen QMS</h2>
@@ -35,7 +35,7 @@
             </div>
         @endif
 
-        <table class="table table-bordered w-full bg-white" id="qmsTable">
+        <table class="table table-bordered w-full bg-gray-50" id="qmsTable">
             <thead class="bg-gray-100">
                 <tr>
                     <th class="p-2">Nomor</th>

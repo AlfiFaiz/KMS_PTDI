@@ -4,7 +4,7 @@
 
 @section('content')
     <br>
-    <div class="bg-white p-6 rounded-xl shadow-md">
+    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
         <div class="flex justify-between items-center mb-4">
             <h1 class="text-2xl font-bold mb-4">Daftar Perusahaan</h1>
 

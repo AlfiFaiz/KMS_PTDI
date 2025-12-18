@@ -5,7 +5,7 @@
 
 @section('content')
     <br>
-    <div class="bg-white p-6 rounded-xl shadow-md">
+    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
         <div class="flex justify-between mb-4">
             <h2 class="text-2xl font-bold text-blue-700">Daftar Task</h2>
             <a href="{{ route('tasks.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded">+ Tambah Task</a>

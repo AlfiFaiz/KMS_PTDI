@@ -4,7 +4,7 @@
 
 @section('content')
     <br>
-    <div class="bg-white p-6 rounded-xl shadow-md mb-6">
+    <div class="bg-gray-50 p-6 rounded-xl shadow-md mb-6">
         <h2 class="text-2xl font-bold text-blue-700 mb-4">Detail Aircraft Program</h2>
         <div class="grid grid-cols-2 gap-4">
             <div>
@@ -38,7 +38,7 @@
     <br>
 
 
-    <div class="bg-white p-6 rounded-xl shadow-md">
+    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
         <div class="flex justify-between mb-4">
             <h2 class="text-2xl font-bold text-blue-700">Engineering Orders - {{ $program->program }}</h2>
             <a href="{{ route('engineering-orders.create', $program->id) }}"

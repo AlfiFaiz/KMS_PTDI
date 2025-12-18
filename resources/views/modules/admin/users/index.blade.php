@@ -6,7 +6,8 @@
 @section('content')
 
 <br>
-<div class="bg-white shadow-md rounded-lg p-6">
+<div class="bg-gray-50 shadow-md rounded-lg p-6">
+
 
     <!-- Header + Search -->
     <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
@@ -89,7 +90,7 @@
 
 </div>
 <div class="overflow-x-auto">
-    <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+    <table class="min-w-full bg-gray-50 border border-gray-200 rounded-lg">
     <thead class="bg-blue-600 text-white">
         <tr>
             <th class="py-3 px-4 text-left">#</th>

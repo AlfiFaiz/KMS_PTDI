@@ -4,7 +4,7 @@
 @section('page-title', 'Edit Task')
 
 @section('content')
-    <div class="bg-white p-6 rounded-xl shadow-md w-full max-w-3xl">
+    <div class="bg-gray-50 p-6 rounded-xl shadow-md w-full max-w-3xl">
         <h2 class="text-2xl font-bold text-blue-700 mb-4">Edit Task</h2>
 
         <form action="{{ route('tasks.update', $task->id) }}" method="POST">

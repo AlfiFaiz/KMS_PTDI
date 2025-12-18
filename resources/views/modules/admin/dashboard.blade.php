@@ -13,7 +13,8 @@
         <!-- Statistik -->
         <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
             <!-- Total User -->
-            <div class="p-5 bg-white rounded-xl shadow-md border-l-4 border-blue-500">
+                <div class="p-5 bg-gray-50 rounded-xl shadow-md border-l-4 border-blue-500">
+
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-gray-500 font-semibold">Total User</p>
@@ -24,7 +25,8 @@
             </div>
 
             <!-- Total Dokumen QMS -->
-            <div class="p-5 bg-white rounded-xl shadow-md border-l-4 border-green-500">
+                <div class="p-5 bg-gray-50 rounded-xl shadow-md border-l-4 border-blue-500">
+
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-gray-500 font-semibold">Total Dokumen QMS</p>
@@ -35,7 +37,8 @@
             </div>
 
             <!-- Total Perusahaan -->
-            <div class="p-5 bg-white rounded-xl shadow-md border-l-4 border-indigo-500">
+                <div class="p-5 bg-gray-50 rounded-xl shadow-md border-l-4 border-blue-500">
+
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-gray-500 font-semibold">Total Perusahaan</p>
@@ -46,7 +49,8 @@
             </div>
 
             <!-- Total Sertifikat -->
-            <div class="p-5 bg-white rounded-xl shadow-md border-l-4 border-yellow-500">
+                <div class="p-5 bg-gray-50 rounded-xl shadow-md border-l-4 border-blue-500">
+
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-gray-500 font-semibold">Total Sertifikat</p>
@@ -57,7 +61,8 @@
             </div>
 
             <!-- Total Aircraft Program -->
-            <div class="p-5 bg-white rounded-xl shadow-md border-l-4 border-red-500">
+                <div class="p-5 bg-gray-50 rounded-xl shadow-md border-l-4 border-blue-500">
+
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-gray-500 font-semibold">Total Aircraft Program</p>
@@ -69,13 +74,15 @@
         </div>
 
         <!-- Grafik -->
-        <div class="bg-white p-6 rounded-xl shadow-md">
+        <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+
             <h3 class="text-xl font-bold text-blue-700 mb-4">Distribusi Pelanggan per Perusahaan</h3>
             <canvas id="chartDokumen"></canvas>
         </div>
 
         <!-- Aktivitas Terbaru -->
-        <div class="bg-white p-6 rounded-xl shadow-md">
+        <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+
             <h3 class="text-xl font-bold text-blue-700 mb-4">Aktivitas Terbaru</h3>
             <ul class="space-y-2 text-gray-700">
                 @foreach ($activities as $activity)

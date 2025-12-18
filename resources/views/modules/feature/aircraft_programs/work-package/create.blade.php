@@ -3,7 +3,7 @@
 @section('page-title', 'Summary of Work Package')
 
 @section('content')
-    <div class="bg-white p-6 rounded-xl shadow-md">
+    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
         <h2 class="text-2xl font-bold text-blue-700 mb-4">Summary of Work Package</h2>
 
         <!-- Info Program -->
@@ -87,7 +87,7 @@
 
     <!-- Modal Notifikasi -->
     <div id="successModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-        <div class="bg-white p-6 rounded shadow-md">
+        <div class="bg-gray-50 p-6 rounded shadow-md">
             <h3 class="text-lg font-bold mb-2">Berhasil</h3>
             <p>Summary berhasil disimpan!</p>
             <button onclick="document.getElementById('successModal').classList.add('hidden')"
