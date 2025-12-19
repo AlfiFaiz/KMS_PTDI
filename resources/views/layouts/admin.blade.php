@@ -66,45 +66,11 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-    <!-- Chart.js v3 + plugin -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-doughnutlabel"></script>
-
 
 
 
     <!-- Alpine.js -->
     <script src="//unpkg.com/alpinejs" defer></script>
-
-    <!-- Script custom -->
-    <script>
-        $(document).ready(function() {
-            // Inisialisasi Select2
-            $('#yourSelectId').select2();
-
-            // Chart.js Doughnut
-            const ctx = document.getElementById('myChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['A', 'B', 'C'],
-                    datasets: [{
-                        data: [30, 50, 20],
-                        backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56']
-                    }]
-                },
-                options: {
-                    plugins: {
-                        doughnutlabel: {
-                            labels: [
-                                { text: '100', font: { size: 20 } },
-                                { text: 'Total' }
-                            ]
-                        }
-                    }
-                }
-            });
-        });
-    </script>
+   
 </body>
 </html>
