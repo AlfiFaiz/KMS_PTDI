@@ -34,15 +34,45 @@
                     <a href="{{ route('audit') }}" class="hover:text-gray-200">Audit</a>
                     <a href="{{ route('info') }}" class="hover:text-gray-200">Info</a>
                 </div>
-                <div class="hidden md:flex items-center space-x-3">
-                    <span class="text-sm">Halo, {{ Auth::user()->name }}</span>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="bg-red-600 px-3 py-1.5 rounded-md font-semibold hover:bg-red-700 transition">
-                            Logout
-                        </button>
-                    </form>
-                </div>
+                <div class="hidden md:flex items-center space-x-5">
+    <!-- Notifikasi -->
+      @php
+        use App\Models\Notification;
+
+        $unreadCount = 0;
+        if (Auth::check()) {
+            $unreadCount = Notification::where('user_id', Auth::id())
+                ->whereNull('read_at')
+                ->count();
+        }
+    @endphp
+
+    <div class="relative">
+        <a href="{{ route('notifications.index') }}" class="text-xl hover:text-gray-200">
+            <i class="fa-solid fa-bell"></i>
+            @if($unreadCount > 0)
+                <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1">
+                    {{ $unreadCount }}
+                </span>
+            @endif
+        </a>
+    </div>
+
+    <!-- Profil -->
+    <a href="" 
+       class="flex items-center space-x-2 hover:text-gray-200">
+        <i class="fa-solid fa-user-circle text-2xl"></i>
+        <span class="text-sm">{{ Auth::user()->name }}</span>
+    </a>
+
+    <!-- Logout -->
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="bg-red-600 px-3 py-1.5 rounded-md font-semibold hover:bg-red-700 transition">
+            Logout
+        </button>
+    </form>
+</div>
             </div>
         </nav>
     </header>
