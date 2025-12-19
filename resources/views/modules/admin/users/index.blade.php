@@ -116,7 +116,6 @@
              class="w-12 h-12 rounded-full object-cover border">
     @endif
 </td>
-
             <td class="py-3 px-4">{{ $user->name }}</td>
             <td class="py-3 px-4">{{ $user->email }}</td>
             <td class="py-3 px-4 capitalize">{{ $user->role }}</td>

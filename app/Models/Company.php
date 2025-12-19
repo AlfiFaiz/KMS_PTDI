@@ -17,5 +17,10 @@ class Company extends Model
     {
         return $this->hasMany(Pelanggan::class, 'company_id');
     }
+     public function aircraftPrograms()
+    {
+        return $this->hasMany(AircraftProgram::class, 'company_id');
+    }
+
 
 }

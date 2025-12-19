@@ -73,12 +73,29 @@
     </a>
 </div>
 
-        <!-- Grafik -->
-        <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Chart Aircraft Program -->
+    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+        <h3 class="text-xl font-bold text-blue-700 mb-4">
+            Distribusi Aircraft Program per Perusahaan
+        </h3>
+        <canvas id="chartDokumen"></canvas>
+    </div>
 
-            <h3 class="text-xl font-bold text-blue-700 mb-4">Distribusi Pelanggan per Perusahaan</h3>
-            <canvas id="chartDokumen"></canvas>
-        </div>
+    <!-- Chart Role User -->
+
+    <div class="bg-gray-50 p-6 rounded-xl shadow-md flex justify-center">
+        <h3 class="text-xl font-bold text-purple-700 mb-4">
+            Distribusi Role User
+        </h3>
+    <div class="w-64 h-64"> <!-- batasi ukuran -->
+        <canvas id="chartRoles"></canvas>
+    </div>
+</div>
+</div>
+
+
+
 
         <!-- Aktivitas Terbaru -->
         <div class="bg-gray-50 p-6 rounded-xl shadow-md">
@@ -103,7 +120,7 @@
             data: {
                 labels: @json($chartLabels),
                 datasets: [{
-                    label: 'Jumlah Pelanggan per Perusahaan',
+                    label: 'Jumlah Aircraf Program per Perusahaan',
                     data: @json($chartData),
                     backgroundColor: 'rgba(54, 162, 235, 0.6)',
                     borderColor: 'rgba(54, 162, 235, 1)',
@@ -120,4 +137,23 @@
             }
         });
     </script>
+    <script>
+    const ctxRoles = document.getElementById('chartRoles').getContext('2d');
+    new Chart(ctxRoles, {
+        type: 'doughnut',
+        data: {
+            labels: @json($roleLabels), // misalnya ['Admin','Manajemen','Pelanggan']
+            datasets: [{
+                data: @json($roleData),   // jumlah masing-masing role
+                backgroundColor: ['#2563eb','#22c55e','#f59e0b']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+</script>
 @endsection

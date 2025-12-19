@@ -48,13 +48,17 @@
                         <td>{{ $p->aircraft_type }}</td>
                         <td>{{ $p->registration }}</td>
                         <td>{{ $p->company->name }}</td>
-                        <td>
-                            @if ($p->image)
-                                <img src="{{ asset('storage/aircraft_images/' . $p->image) }}" class="w-24 rounded shadow">
-                            @else
-                                <span class="text-gray-400">No Image</span>
-                            @endif
-                        </td>
+   <td>
+    @if ($p->image)
+        <a href="{{ asset('storage/aircraft_images/' . $p->image) }}" target="_blank">
+            <img src="{{ asset('storage/aircraft_images/' . $p->image) }}" 
+                 class="w-24 rounded shadow hover:opacity-80 transition">
+        </a>
+    @else
+        <span class="text-gray-400">No Image</span>
+    @endif
+</td>
+
                         <td class="w-48">
                             <div class="w-full bg-gray-200 rounded-full h-4">
                                 <div class="bg-blue-600 h-4 rounded-full" style="width: {{ $progress }}%"></div>

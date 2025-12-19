@@ -9,6 +9,8 @@ use App\Models\Company;
 use App\Models\ActivityLog;
 use App\Models\Notification;
 use App\Models\AircraftProgram;
+use Illuminate\Support\Facades\DB;
+
 
 class DashboardController extends Controller
 {
@@ -28,9 +30,22 @@ class DashboardController extends Controller
                 $countCertificates = Certificate::count();
                 $countPrograms = AircraftProgram::count();
 
-                $companies = Company::withCount('pelanggan')->get();
-                $chartLabels = $companies->pluck('name');
-                $chartData = $companies->pluck('pelanggan_count');
+                // Ambil semua perusahaan dengan jumlah aircraft program
+$companies = Company::withCount('aircraftPrograms')->get();
+
+// Label chart = nama perusahaan
+$chartLabels = $companies->pluck('name');
+
+// Data chart = jumlah aircraft program per perusahaan
+$chartData = $companies->pluck('aircraft_programs_count');
+  // 2. Distribusi Role User
+        $roleStats = User::select('role', DB::raw('count(*) as total'))
+                        ->groupBy('role')
+                        ->get();
+        $roleLabels = $roleStats->pluck('role');
+        $roleData   = $roleStats->pluck('total');
+
+
 
                 $activities = ActivityLog::with('user')->latest()->take(10)->get();
                 $notifications = Notification::latest()->take(10)->get();
@@ -44,6 +59,8 @@ class DashboardController extends Controller
                     'chartLabels',
                     'chartData',
                     'activities', // pakai nama sama dengan Blade
+                     'roleLabels','roleData',
+
                     'notifications'
                 ));
 
