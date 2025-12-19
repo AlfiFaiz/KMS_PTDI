@@ -1,10 +1,11 @@
-<div class="sidebar">
+<div class="sidebar h-screen overflow-y-auto bg-gray-800 text-white p-4">
     <h4 class="text-center mb-4">{{ ucfirst(auth()->user()->role) }} Panel</h4>
+    
 
     <!-- Dashboard -->
     <a href="{{ route('dashboard') }}"
-        class="{{ request()->routeIs(auth()->user()->role . '.dashboard') ? 'bg-blue-600 text-white' : '' }}">
-        <i class="fa-solid fa-gauge mr-2"></i> Dashboard
+       class="{{ request()->routeIs(auth()->user()->role . '.dashboard') ? 'bg-blue-600 text-white' : '' }}">
+       <i class="fa-solid fa-gauge mr-2"></i> Dashboard
     </a>
     <hr class="bg-light my-3">
 
@@ -19,16 +20,16 @@
     <!-- Menu khusus Manajemen -->
     @if (auth()->user()->role === 'manajemen')
         <a href="{{ route('pelanggan.index') }}"
-            class="{{ request()->routeIs('pelanggan.*') ? 'bg-blue-600 text-white' : '' }}">
-            <i class="fa-solid fa-users mr-2"></i> Manajemen Pelanggan
+           class="{{ request()->routeIs('pelanggan.*') ? 'bg-blue-600 text-white' : '' }}">
+           <i class="fa-solid fa-users mr-2"></i> Manajemen Pelanggan
         </a>
         <hr class="bg-light my-3">
     @endif
 
-    <!-- Menu umum (semua role) -->
+    <!-- Menu umum -->
     <a href="{{ route('companies.index') }}"
-        class="{{ request()->routeIs('companies.*') ? 'bg-blue-600 text-white' : '' }}">
-        <i class="fa-solid fa-building mr-2"></i> Manajemen Perusahaan
+       class="{{ request()->routeIs('companies.*') ? 'bg-blue-600 text-white' : '' }}">
+       <i class="fa-solid fa-building mr-2"></i> Manajemen Perusahaan
     </a>
     <hr class="bg-light my-3">
 
@@ -38,15 +39,14 @@
     <hr class="bg-light my-3">
 
     <a href="{{ route('certificates.index') }}"
-        class="{{ request()->routeIs('certificates.*') ? 'bg-blue-600 text-white' : '' }}">
-        <i class="fa-solid fa-certificate mr-2"></i> Manajemen Sertifikat
+       class="{{ request()->routeIs('certificates.*') ? 'bg-blue-600 text-white' : '' }}">
+       <i class="fa-solid fa-certificate mr-2"></i> Manajemen Sertifikat
     </a>
     <hr class="bg-light my-3">
 
-    <!-- Tambahan: Menu Info -->
     <a href="{{ route('infos.index') }}"
-        class="{{ request()->routeIs('infos.*') ? 'bg-blue-600 text-white' : '' }}">
-        <i class="fa-solid fa-circle-info mr-2"></i> Manajemen Info
+       class="{{ request()->routeIs('infos.*') ? 'bg-blue-600 text-white' : '' }}">
+       <i class="fa-solid fa-circle-info mr-2"></i> Manajemen Info
     </a>
     <hr class="bg-light my-3">
 
@@ -59,12 +59,12 @@
         </button>
         <div x-show="open" x-transition class="ml-6 mt-1 space-y-1">
             <a href="{{ route('aircraft-programs.index') }}"
-                class="block px-3 py-2 rounded {{ request()->routeIs('aircraft-programs.*') ? 'bg-blue-600 text-white' : 'hover:bg-blue-600 text-gray-200' }}">
-                <i class="fa-solid fa-diagram-project mr-2"></i> Project
+               class="block px-3 py-2 rounded {{ request()->routeIs('aircraft-programs.*') ? 'bg-blue-600 text-white' : 'hover:bg-blue-600 text-gray-200' }}">
+               <i class="fa-solid fa-diagram-project mr-2"></i> Project
             </a>
             <a href="{{ route('tasks.index') }}"
-                class="block px-3 py-2 rounded {{ request()->routeIs('tasks.*') ? 'bg-blue-600 text-white' : 'hover:bg-blue-600 text-gray-200' }}">
-                <i class="fa-solid fa-list-check mr-2"></i> Task
+               class="block px-3 py-2 rounded {{ request()->routeIs('tasks.*') ? 'bg-blue-600 text-white' : 'hover:bg-blue-600 text-gray-200' }}">
+               <i class="fa-solid fa-list-check mr-2"></i> Task
             </a>
         </div>
     </div>
