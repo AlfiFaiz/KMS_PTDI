@@ -50,10 +50,10 @@
             </button>
 
             <div class="flex flex-col space-y-6 text-center">
-                <a href="#" class="text-white text-xl font-semibold hover:text-gray-300">Home</a>
-                <a href="#" class="text-white text-xl font-semibold hover:text-gray-300">About Us</a>
-                <a href="#" class="text-white text-xl font-semibold hover:text-gray-300">Capabilities</a>
-                <a href="#" class="text-white text-xl font-semibold hover:text-gray-300">Certificates</a>
+                <a href="/" class="text-white text-xl font-semibold hover:text-gray-300">Home</a>
+                <a href="about" class="text-white text-xl font-semibold hover:text-gray-300">About Us</a>
+                <a href="capabilities" class="text-white text-xl font-semibold hover:text-gray-300">Capabilities</a>
+                <a href="certificaties" class="text-white text-xl font-semibold hover:text-gray-300">Certificates</a>
             </div>
 
             <div class="mt-8 flex flex-col space-y-3">

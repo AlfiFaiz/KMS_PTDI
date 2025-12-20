@@ -7,10 +7,9 @@
     <title>Pelanggan @yield('title')</title>
 
     <!-- CSS & JS -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-100 font-sans">
 
@@ -46,7 +45,9 @@
                 ->count();
         }
     @endphp
+<div class="flex flex-wrap items-center gap-4">
 
+    <!-- Notifikasi -->
     <div class="relative">
         <a href="{{ route('notifications.index') }}" class="text-xl hover:text-gray-200">
             <i class="fa-solid fa-bell"></i>
@@ -59,7 +60,7 @@
     </div>
 
     <!-- Profil -->
-    <a href="" 
+    <a href=" " 
        class="flex items-center space-x-2 hover:text-gray-200">
         <i class="fa-solid fa-user-circle text-2xl"></i>
         <span class="text-sm">{{ Auth::user()->name }}</span>

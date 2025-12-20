@@ -34,23 +34,23 @@
                     <tbody>
                         @foreach ($qms as $index => $q)
                         <tr class="border text-center">
-                            <td class="p-2 border">{{ $qms->firstItem() + $index }}</td>
-                            <td class="p-2 border">{{ $q->nomor }}</td>
-                            <td class="p-2 border">{{ $q->judul }}
-                                <P class="text-blue-600 font-bold"> [ {{ $q->type }} ]</P>
-                            </td>
-                            <td class="p-2 border">{{ $q->date_issued }}</td>
-                            <td class="p-2 border">{{ $q->org }}</td>
-                            <td class="p-2 border">{{ $q->rev }}</td>
-                            <td class="p-2 border">{{ $q->amend }}</td>
-                            <td class="p-2 border">{{ $q->affected_function }}</td>
-                            <td class="p-2 border">
-                                @if ($q->file_path)
-                                <a href="{{ asset('storage/' . $q->file_path) }}" target="_blank" class="text-blue-600 hover:underline">Download</a>
-                                @else
-                                    <span class="text-gray-500">Tidak ada file</span>
-                                @endif
-                            </td>
+                            <td class="p-2 border">{{ $q->nomor ?? '-' }}</td>
+<td class="p-2 border">
+    {{ $q->judul ?? '-' }}
+    <p class="text-blue-600 font-bold">[ {{ $q->type ?? '-' }} ]</p>
+</td>
+<td class="p-2 border">{{ $q->date_issued ?? '-' }}</td>
+<td class="p-2 border">{{ $q->org ?? '-' }}</td>
+<td class="p-2 border">{{ $q->rev ?? '-' }}</td>
+<td class="p-2 border">{{ $q->amend ?? '-' }}</td>
+<td class="p-2 border">{{ $q->affected_function ?? '-' }}</td>
+<td class="p-2 border">
+    @if (!empty($q->file_path))
+        <a href="{{ asset('storage/' . $q->file_path) }}" target="_blank" class="text-blue-600 hover:underline">Download</a>
+    @else
+        <span class="text-gray-500">Tidak ada file</span>
+    @endif
+</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -85,31 +85,27 @@
 <script>
   function filterTable() {
     let search = document.getElementById("search").value.toLowerCase();
-    let filterType = document.getElementById("filterType").value.toLowerCase();
     let table = document.getElementById("formTable");
     let rows = table.getElementsByTagName("tr");
 
     for (let i = 1; i < rows.length; i++) {
-        let nomor = rows[i].getElementsByTagName("td")[1]?.textContent.toLowerCase() || "";
-        let judulCell = rows[i].getElementsByTagName("td")[2]; // Kolom Judul
+        let nomor = rows[i].getElementsByTagName("td")[0]?.textContent.toLowerCase() || "";
+        let judulCell = rows[i].getElementsByTagName("td")[1];
         let judul = judulCell?.textContent.toLowerCase() || "";
 
-        // Ambil type dari dalam <p> di kolom judul
-        let type = judulCell?.querySelector('p')?.textContent.toLowerCase().replace(/\[|\]/g, '').trim() || "";
-
         let matchesSearch = nomor.includes(search) || judul.includes(search);
-        let matchesFilter = filterType === "" || type === filterType;
 
-        rows[i].style.display = matchesSearch && matchesFilter ? "" : "none";
+        rows[i].style.display = matchesSearch ? "" : "none";
     }
-}
+  }
 
 
 
-    function changeLimit() {
+   function changeLimit() {
     let limit = document.getElementById("limit").value;
     window.location.href = `?limit=${limit}`;
 }
+
 
 // Sembunyikan pagination jika "Tampilkan Semua" dipilih
 document.addEventListener("DOMContentLoaded", function() {
