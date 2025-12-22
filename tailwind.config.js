@@ -17,6 +17,11 @@ export default {
         },
     },
 
-    plugins: [forms],
+    plugins: [
+    require('@tailwindcss/forms'),
+    // kalau mau typography untuk konten blog:
+    require('@tailwindcss/typography'),
+  ],
+
     
 };

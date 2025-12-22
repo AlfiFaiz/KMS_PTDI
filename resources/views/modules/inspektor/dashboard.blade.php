@@ -54,17 +54,7 @@
         </div>
 
         <!-- Notifikasi -->
-        <div class="bg-white p-6 rounded-xl shadow-md">
-            <h3 class="text-xl font-bold text-blue-700 mb-4">Notifikasi</h3>
-            <ul class="space-y-2 text-gray-700">
-                @foreach ($notifications as $notif)
-                    <li class="border-b pb-2">
-                        <i class="fa-solid fa-bell text-yellow-500 mr-2"></i>
-                        {{ $notif->message }}
-                    </li>
-                @endforeach
-            </ul>
-        </div>
+       
 
     </div>
 

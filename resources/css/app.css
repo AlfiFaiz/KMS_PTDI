@@ -1,3 +1,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Styling untuk diff */
+.diff {
+  white-space: pre-wrap;
+  font-family: monospace;
+}
+.diff .diff-added { background-color: #d4f7d4; }
+.diff .diff-removed { background-color: #f7d4d4; }
+
+/* Styling bullet dan nomor untuk Trix editor dan hasil render */
+trix-editor ul,
+.trix-content ul {
+  list-style-type: disc !important;
+  list-style-position: outside !important;
+  padding-left: 1.5rem !important;
+}
+
+trix-editor ol,
+.trix-content ol {
+  list-style-type: decimal !important;
+  list-style-position: outside !important;
+  padding-left: 1.5rem !important;
+}
+
+trix-editor li,
+.trix-content li {
+  margin-bottom: 0.5rem;
+}
+
+/* Fallback jika bullet/nomor tetap tidak muncul */
+trix-editor ul li::before,
+.trix-content ul li::before {
+  content: "• ";
+  margin-right: 0.5rem;
+}
+
+trix-editor ol li::before,
+.trix-content ol li::before {
+  content: counter(list-item) ". ";
+  margin-right: 0.5rem;
+}

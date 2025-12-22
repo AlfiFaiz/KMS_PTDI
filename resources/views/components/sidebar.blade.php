@@ -69,6 +69,13 @@
         </div>
     </div>
     <hr class="bg-light my-3">
+    <!-- Menu Wiki -->
+<a href="{{ route('wiki.index') }}"
+   class="block px-3 py-2 rounded {{ request()->routeIs('wiki.*') ? 'bg-blue-600 text-white' : 'hover:bg-blue-600 text-gray-200' }}">
+   <i class="fa-solid fa-book mr-2"></i> Manajemen Wiki
+</a>
+<hr class="bg-light my-3">
+
 
     <!-- Logout -->
     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

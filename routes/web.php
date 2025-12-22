@@ -168,7 +168,7 @@ Route::get('/work-package/{summary}/download', [App\Http\Controllers\WorkPackage
 
 
 Route::get('/work-package/{program}/summary', [WorkPackageController::class, 'summaryPelanggan'])
-    ->name('work-package.summary');
+->name('work-package.summary');
 
 
 // Audit page
@@ -183,6 +183,24 @@ Route::get('info', function () {
     return view('pelanggan.info.index', compact('infos'));
 })->name('info');
 
+use App\Http\Controllers\WikiController;
 
+
+Route::resource('wiki', WikiController::class);
+
+// route khusus workflow
+Route::post('wiki/{wiki}/review', [WikiController::class,'review'])->name('wiki.review');
+Route::post('wiki/{wiki}/publish', [WikiController::class,'publish'])->name('wiki.publish');
+Route::post('wiki/{wiki}/archive', [WikiController::class,'archive'])->name('wiki.archive');
+
+// route versi
+use App\Http\Controllers\WikiVersionController;
+
+Route::get('wiki/{wiki}/version/{version}', [WikiVersionController::class,'show'])->name('wiki.version.show');
+
+Route::post('/upload', function (Illuminate\Http\Request $request) {
+    $path = $request->file('file')->store('uploads', 'public');
+    return response()->json(['url' => asset('storage/'.$path)]);
+});
 
 require __DIR__ . '/auth.php';

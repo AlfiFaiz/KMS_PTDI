@@ -3,7 +3,7 @@
  
 <head>
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 
 <!-- Bootstrap CSS -->
@@ -18,7 +18,7 @@
 
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-<title>Admin @yield('title')</title>
+<title>Manajemen @yield('title')</title>
 <!-- jQuery harus duluan -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
