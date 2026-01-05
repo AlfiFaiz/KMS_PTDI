@@ -23,10 +23,12 @@
                     @endphp
 
                     <div class="bg-blue-900 bg-opacity-80 shadow-md rounded-lg p-3 flex flex-col gap-3 aircraft-item"
-                        data-program="{{ strtolower($program->program) }}"
-                        data-type="{{ strtolower($program->aircraft_type) }}"
-                        data-registration="{{ strtolower($program->registration) }}"
-                        data-customer="{{ strtolower($program->customer) }}">
+     data-program="{{ strtolower($program->program) }}"
+     data-type="{{ strtolower($program->aircraft_type) }}"
+     data-registration="{{ strtolower($program->registration) }}"
+     data-serial="{{ strtolower($program->serial_number) }}"
+     data-company="{{ strtolower($program->company->name ?? '') }}"
+     data-wbs="{{ strtolower($program->wbs_no) }}">
 
                         <!-- Gambar & Progress -->
                         <div class="flex items-center gap-3">
@@ -45,11 +47,31 @@
                         </div>
 
                         <!-- Informasi Pesawat -->
-                        <div class="text-white text-sm">
-                            <p class="font-semibold">{{ $program->program }}</p>
-                            <p>{{ $program->aircraft_type }} | {{ $program->registration }}</p>
-                            <p class="text-gray-300">{{ $program->customer }}</p>
-                        </div>
+                       <div class="text-white" style="text-align: left;">
+    <p style="font-weight: 900; font-size: 1.125rem; line-height: 1.2; text-transform: uppercase; color: #ffffff;">
+        {{ $program->program }}
+    </p>
+    <p style="color: #60a5fa; font-weight: 700; font-size: 12px; margin-top: 2px; text-transform: uppercase;">
+        {{ $program->aircraft_type }} | {{ $program->registration }}
+    </p>
+
+    <div style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;">
+        <p style="font-size: 11px; color: #cbd5e1; margin-bottom: 2px;">
+            <span style="color: #94a3b8;">S/N:</span> {{ $program->serial_number ?? '-' }}
+        </p>
+        <p style="font-size: 11px; color: #cbd5e1; margin-bottom: 2px;">
+            <span style="color: #94a3b8;">WBS:</span> {{ $program->wbs_no ?? '-' }}
+        </p>
+        <p style="font-size: 11px; color: #cbd5e1;">
+            <span style="color: #94a3b8;">Contract:</span> {{ $program->contract_no ?? '-' }}
+        </p>
+    </div>
+
+    <p style="color: #3b82f6; font-size: 11px; font-weight: 800; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+        <i class="fa-solid fa-building" style="margin-right: 4px;"></i>
+        {{ $program->company->name ?? 'N/A' }}
+    </p>
+</div>
 
                         <!-- Tombol Detail -->
                         <a href="{{ route('project.detail', $program->id) }}"

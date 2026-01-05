@@ -19,14 +19,13 @@
 
             <!-- Filter Type -->
             <select id="filterType" class="border p-2 rounded w-full md:w-1/3" onchange="filterTable()">
-                <option value="">-- Semua Type --</option>
-                <option value="FORM">FORM</option>
-                <option value="MANUAL">MANUAL</option>
-                <option value="PROCEDURE">PROCEDURE</option>
-                <option value="WORK INSTRUCTION">WORK INSTRUCTION</option>
-                <option value="PERSONAL ROSTER">PERSONAL ROSTER</option>
-                <option value="TRAINING">TRAINING</option>
-            </select>
+    <option value="">-- Semua Type --</option>
+    <option value="MANUAL">MANUAL</option>
+    <option value="QUALITY DOCUMENT">QUALITY DOCUMENT</option>
+    <option value="PROCEDURE">PROCEDURE</option>
+    <option value="WORK INSTRUCTION">WORK INSTRUCTION</option>
+    <option value="FORM">FORM</option>
+</select>
         </div>
 
         @if (session('success'))

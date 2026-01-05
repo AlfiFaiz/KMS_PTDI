@@ -20,28 +20,30 @@ class CertificateController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'nomor' => 'required|string|max:255',
-            'judul' => 'required|string|max:255',
-            'date_issued' => 'required|date',
-            'issued_by' => 'required|string|max:255',
-            'file_path' => 'required|file|mimes:pdf,jpg,jpeg,png',
-        ]);
+{
+    $request->validate([
+        'nomor' => 'required|string|max:255',
+        'judul' => 'required|string|max:255',
+        'date_issued' => 'required|date',
+        'valid_until' => 'nullable|date|after_or_equal:date_issued', // Validasi: harus tgl setelah issued
+        'issued_by' => 'required|string|max:255',
+        'file_path' => 'required|file|mimes:pdf,jpg,jpeg,png',
+    ]);
 
-        $fileName = time() . '_' . $request->file('file_path')->getClientOriginalName();
-        $request->file('file_path')->storeAs('public/certificates', $fileName);
+    $fileName = time() . '_' . $request->file('file_path')->getClientOriginalName();
+    $request->file('file_path')->storeAs('public/certificates', $fileName);
 
-        Certificate::create([
-            'nomor' => $request->nomor,
-            'judul' => $request->judul,
-            'date_issued' => $request->date_issued,
-            'issued_by' => $request->issued_by,
-            'file_path' => $fileName,
-        ]);
+    Certificate::create([
+        'nomor' => $request->nomor,
+        'judul' => $request->judul,
+        'date_issued' => $request->date_issued,
+        'valid_until' => $request->valid_until, // Simpan ke DB
+        'issued_by' => $request->issued_by,
+        'file_path' => $fileName,
+    ]);
 
-        return redirect()->route('certificates.index')->with('success', 'Sertifikat berhasil ditambahkan!');
-    }
+    return redirect()->route('certificates.index')->with('success', 'Sertifikat berhasil ditambahkan!');
+}
 
     public function edit($id)
     {
@@ -49,36 +51,36 @@ class CertificateController extends Controller
         return view('modules.feature.certificates.edit', compact('certificate'));
     }
 
-    public function update(Request $request, $id)
-    {
-        $certificate = Certificate::findOrFail($id);
+  public function update(Request $request, $id)
+{
+    $certificate = Certificate::findOrFail($id);
 
-        $request->validate([
-            'nomor' => 'required|string|max:255',
-            'judul' => 'required|string|max:255',
-            'date_issued' => 'required|date',
-            'issued_by' => 'required|string|max:255',
-            'file_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-        ]);
+    $request->validate([
+        'nomor' => 'required|string|max:255',
+        'judul' => 'required|string|max:255',
+        'date_issued' => 'required|date',
+        'valid_until' => 'nullable|date|after_or_equal:date_issued', // Validasi
+        'issued_by' => 'required|string|max:255',
+        'file_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
+    ]);
 
-        if ($request->hasFile('file_path')) {
-            Storage::delete('public/certificates/' . $certificate->file_path);
-
-            $fileName = time() . '_' . $request->file('file_path')->getClientOriginalName();
-            $request->file('file_path')->storeAs('public/certificates', $fileName);
-
-            $certificate->file_path = $fileName;
-        }
-
-        $certificate->update([
-            'nomor' => $request->nomor,
-            'judul' => $request->judul,
-            'date_issued' => $request->date_issued,
-            'issued_by' => $request->issued_by,
-        ]);
-
-        return redirect()->route('certificates.index')->with('success', 'Sertifikat berhasil diperbarui!');
+    if ($request->hasFile('file_path')) {
+        Storage::delete('public/certificates/' . $certificate->file_path);
+        $fileName = time() . '_' . $request->file('file_path')->getClientOriginalName();
+        $request->file('file_path')->storeAs('public/certificates', $fileName);
+        $certificate->file_path = $fileName;
     }
+
+    $certificate->update([
+        'nomor' => $request->nomor,
+        'judul' => $request->judul,
+        'date_issued' => $request->date_issued,
+        'valid_until' => $request->valid_until, // Update di DB
+        'issued_by' => $request->issued_by,
+    ]);
+
+    return redirect()->route('certificates.index')->with('success', 'Sertifikat berhasil diperbarui!');
+}
 
     public function destroy($id)
     {

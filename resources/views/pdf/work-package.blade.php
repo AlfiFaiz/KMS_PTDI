@@ -89,7 +89,8 @@
         <p><strong>SERIAL NO:</strong> {{ strtoupper($summary->program->serial_number) }}</p>
         <p><strong>REGISTRATION:</strong> {{ strtoupper($summary->program->registration) }}</p>
         <p><strong>OWNER:</strong> {{ strtoupper($summary->program->company->name) }}</p>
-        <p><strong>CONTRACT NO:</strong> {{ strtoupper($summary->contract_number) }}</p>
+        <p><strong>CONTRACT NO:</strong> {{ strtoupper($summary->program->contract_no) }}</p>
+        <p><strong>WBS No:</strong> {{ strtoupper($summary->program->wbs_no) }}</p>
     </div>
 
     <table>

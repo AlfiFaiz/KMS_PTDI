@@ -78,6 +78,17 @@
 
         <a href="{{ route('engineering-orders.index', $p->id) }}"
            class="px-2 py-1 bg-green-600 text-white rounded">Engineering Orders</a>
+           @if($p->document_file)
+    <a href="{{ asset('storage/aircraft_documents/' . $p->document_file) }}" 
+       target="_blank"
+       class="px-2 py-1 bg-blue-600 text-white rounded text-xs font-semibold hover:bg-blue-700 transition-colors flex items-center">
+       <i class="fa-solid fa-file-pdf mr-1"></i> Lihat Dokumen RTS
+    </a>
+    @else
+        <span class="px-2 py-1 bg-gray-400 text-white rounded text-xs font-semibold cursor-not-allowed">
+            No File RTS
+        </span>
+    @endif
 
         <a href="{{ route('work-package.create', $p->id) }}"
            class="px-2 py-1 bg-indigo-600 text-white rounded">

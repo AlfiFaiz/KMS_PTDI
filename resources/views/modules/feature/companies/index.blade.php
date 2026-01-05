@@ -6,9 +6,9 @@
     <br>
     <div class="bg-gray-50 p-6 rounded-xl shadow-md">
         <div class="flex justify-between items-center mb-4">
-            <h1 class="text-2xl font-bold mb-4">Daftar Perusahaan</h1>
+            <h1 class="text-2xl font-bold mb-4">Daftar Customer</h1>
 
-            <a href="{{ route('companies.create') }}" class="btn btn-primary mb-3">Tambah Perusahaan</a>
+            <a href="{{ route('companies.create') }}" class="btn btn-primary mb-3">Tambah Customer</a>
         </div>
         <div class="mb-4">
             <input type="text" id="search" class="border p-2 rounded w-full md:w-1/3"

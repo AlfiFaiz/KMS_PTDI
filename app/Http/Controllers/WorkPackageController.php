@@ -148,7 +148,6 @@ class WorkPackageController extends Controller
     {
         $summary = WorkPackageSummary::firstOrCreate(
             ['aircraft_program_id' => $programId],
-            ['contract_number' => $request->contract_number]
         );
 
         foreach ($request->items as $item) {

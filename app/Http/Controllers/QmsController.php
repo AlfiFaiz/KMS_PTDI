@@ -9,10 +9,13 @@ use Illuminate\Support\Facades\Storage;
 class QmsController extends Controller
 {
     public function index()
-    {
-        $qms = QMS::orderBy('nomor')->paginate(10);
-        return view('modules.feature.qms.index', compact('qms'));
-    }
+{
+    $qms = QMS::orderByRaw("FIELD(type, 'MANUAL', 'QUALITY DOCUMENT', 'PROCEDURE', 'WORK INSTRUCTION', 'FORM')")
+        ->orderBy('nomor') // Urutan kedua jika type-nya sama
+        ->paginate(10);
+
+    return view('modules.feature.qms.index', compact('qms'));
+}
 
     public function create()
     {
@@ -25,10 +28,8 @@ class QmsController extends Controller
             'nomor' => 'required|string|max:255',
             'judul' => 'required|string|max:255',
             'date_issued' => 'required|date',
-            'org' => 'required|string|max:255',
             'rev' => 'required|integer',
             'amend' => 'nullable|integer',
-            'affected_function' => 'required|string|max:255',
             'type' => 'required|string',
             'file_path' => 'required|file|mimes:pdf,doc,docx,xlsx,xls,ppt,pptx',
         ]);
@@ -43,10 +44,8 @@ class QmsController extends Controller
             'nomor' => $request->nomor,
             'judul' => $request->judul,
             'date_issued' => $request->date_issued,
-            'org' => $request->org,
             'rev' => $request->rev,
             'amend' => $request->amend,
-            'affected_function' => $request->affected_function,
             'type' => $request->type,
             'file_path' => $fileName,
         ]);
@@ -68,10 +67,8 @@ class QmsController extends Controller
             'nomor' => 'required|string|max:255',
             'judul' => 'required|string|max:255',
             'date_issued' => 'required|date',
-            'org' => 'required|string|max:255',
             'rev' => 'required|integer',
             'amend' => 'nullable|integer',
-            'affected_function' => 'required|string|max:255',
             'type' => 'required|string',
             'file_path' => 'nullable|file|mimes:pdf,doc,docx,xlsx,xls,ppt,pptx',
         ]);
@@ -91,10 +88,8 @@ class QmsController extends Controller
             'nomor' => $request->nomor,
             'judul' => $request->judul,
             'date_issued' => $request->date_issued,
-            'org' => $request->org,
             'rev' => $request->rev,
             'amend' => $request->amend,
-            'affected_function' => $request->affected_function,
             'type' => $request->type,
         ]);
 

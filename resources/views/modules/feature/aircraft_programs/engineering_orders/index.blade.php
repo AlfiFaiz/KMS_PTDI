@@ -8,17 +8,45 @@
         <h2 class="text-2xl font-bold text-blue-700 mb-4">Detail Aircraft Program</h2>
         <div class="grid grid-cols-2 gap-4">
             <div>
-                <p><span class="font-semibold">Program:</span> {{ $program->program }}</p>
-                <p><span class="font-semibold">Aircraft Type:</span> {{ $program->aircraft_type }}</p>
-                <p><span class="font-semibold">Registration:</span> {{ $program->registration }}</p>
+                <div class="grid grid-cols-2 gap-x-4">
+    <p><span class="font-semibold">Program:</span> {{ $program->program }}</p>
+    <p><span class="font-semibold">Registration:</span> {{ $program->registration }}</p>
+    <p><span class="font-semibold">A/C Type:</span> {{ $program->aircraft_type }}</p>
+    <p><span class="font-semibold">Serial No:</span> {{ $program->serial_number ?? '-' }}</p>
+    <p><span class="font-semibold">WBS No:</span> {{ $program->wbs_no ?? '-' }}</p>
+    <p><span class="font-semibold">Contract No:</span> {{ $program->contract_no ?? '-' }}</p>
+</div>
             </div>
             <div>
-                <p><span class="font-semibold">Company:</span> {{ $program->company->name }}</p>
+                <p><span class="font-semibold">Customer:</span> {{ $program->company->name }}</p>
                 @if ($program->image)
                     <p class="mt-2"><span class="font-semibold">Image:</span></p>
                     <img src="{{ asset('storage/aircraft_images/' . $program->image) }}" class="w-48 rounded shadow">
                 @endif
             </div>
+            <div class="flex items-start">
+            <div class="w-40 flex-shrink-0 font-semibold text-gray-600 uppercase text-[11px] leading-tight">Dokumen Return to Service (RTS)</div>
+            <div class="px-2 text-gray-400">:</div>
+            <div class="min-w-0 flex-1">
+                @if($program->document_file)
+                    <a href="{{ asset('storage/aircraft_documents/' . $program->document_file) }}" 
+                       target="_blank" 
+                       class="text-blue-600 hover:text-blue-800 underline flex items-center group">
+                        <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path>
+                        </svg>
+                        <span class="truncate font-bold text-sm">
+                            {{ basename($program->document_file) }}
+                        </span>
+                    </a>
+                @else
+                    <span class="text-gray-400 font-normal italic text-xs">No file uploaded</span>
+                @endif
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
         </div>
         <a href="{{ url()->previous() }}"
             class="bg-gray-700 text-white px-6 py-2 rounded-lg font-semibold hover:bg-gray-900">

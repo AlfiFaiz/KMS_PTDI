@@ -14,10 +14,8 @@ class QMS extends Model
         'nomor',
         'judul',
         'date_issued',
-        'org',
         'rev',
         'amend',
-        'affected_function',
         'type',
         'file_path', // <- pastikan ini juga ada
     ];

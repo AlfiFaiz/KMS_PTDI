@@ -12,5 +12,6 @@ class Certificate extends Model
         'date_issued',
         'issued_by',
         'file_path',
+        'valid until',
     ];
 }

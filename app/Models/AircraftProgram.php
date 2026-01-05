@@ -10,12 +10,16 @@ class AircraftProgram extends Model
     use HasFactory;
 
     protected $fillable = [
-        'program',
-        'aircraft_type',
-        'registration',
-        'company_id',
-        'image',
-    ];
+    'program',
+    'aircraft_type',
+    'registration',
+    'serial_number', // Tambahkan ini
+    'wbs_no',        // Tambahkan ini
+    'contract_no',   // Tambahkan ini
+    'company_id',
+    'document_file',
+    'image',
+];
 
     // Relasi: satu program milik satu company
     public function company()

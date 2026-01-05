@@ -1,18 +1,18 @@
 @extends('layouts.admin')
 
-@section('page-title', 'Tambah Perusahaan')
+@section('page-title', 'Tambah Customer')
 
 @section('content')
 
     <div class="bg-gray-50 p-6 rounded-xl shadow-md w-full max-w-xl">
 
-        <h2 class="text-2xl font-bold text-blue-700 mb-4">Tambah Perusahaan</h2>
+        <h2 class="text-2xl font-bold text-blue-700 mb-4">Tambah Customer</h2>
 
         <form action="{{ route('companies.store') }}" method="POST">
             @csrf
 
             <div class="mb-3">
-                <label class="font-semibold">Nama Perusahaan</label>
+                <label class="font-semibold">Nama Customer</label>
                 <input type="text" name="name" class="form-control" required>
             </div>
 

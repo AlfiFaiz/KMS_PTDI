@@ -2,158 +2,106 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 @section('content')
-    <div class="p-6 space-y-8">
-
-        <!-- Header -->
-        <div class="bg-gradient-to-r from-blue-600 to-blue-400 text-white p-6 rounded-xl shadow-lg">
-            <h1 class="text-3xl font-bold">Dashboard Admin</h1>
-            <p class="text-lg mt-1">Selamat datang, <span class="font-semibold">{{ auth()->user()->name }}</span></p>
+    <div class="p-4 space-y-6"> <div class="bg-gradient-to-r from-blue-600 to-blue-400 text-white p-4 rounded-lg shadow-md">
+            <h1 class="text-xl font-bold">Dashboard Admin</h1>
+            <p class="text-sm opacity-90">Selamat datang, <span class="font-semibold">{{ auth()->user()->name }}</span></p>
         </div>
 
-        <!-- Statistik -->
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
-    <!-- Total User -->
-    <a href="{{ route('users.index') }}" 
-       class="p-5 bg-gray-50 rounded-xl shadow-md border-l-4 border-blue-500 hover:bg-blue-100 transition">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-gray-500 font-semibold">Total User</p>
-                <h2 class="text-3xl font-bold text-gray-800 mt-1">{{ $countUsers }}</h2>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+            @php
+                $stats = [
+                    ['label' => 'Total User', 'count' => $countUsers, 'route' => 'users.index', 'color' => 'blue', 'icon' => 'fa-users'],
+                    ['label' => 'Dokumen QMS', 'count' => $countQms, 'route' => 'qms.index', 'color' => 'green', 'icon' => 'fa-file-lines'],
+                    ['label' => 'Perusahaan', 'count' => $countCompanies, 'route' => 'companies.index', 'color' => 'indigo', 'icon' => 'fa-building'],
+                    ['label' => 'Sertifikat', 'count' => $countCertificates, 'route' => 'certificates.index', 'color' => 'yellow', 'icon' => 'fa-certificate'],
+                    ['label' => 'Aircraft Program', 'count' => $countPrograms, 'route' => 'aircraft-programs.index', 'color' => 'red', 'icon' => 'fa-plane'],
+                ];
+            @endphp
+
+            @foreach($stats as $stat)
+            <a href="{{ route($stat['route']) }}" 
+               class="p-3 bg-white rounded-lg shadow-sm border-l-4 border-{{ $stat['color'] }}-500 hover:bg-{{ $stat['color'] }}-50 transition">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] text-gray-500 font-bold uppercase tracking-tight">{{ $stat['label'] }}</p>
+                        <h2 class="text-lg font-black text-gray-800">{{ $stat['count'] }}</h2>
+                    </div>
+                    <i class="fa-solid {{ $stat['icon'] }} text-xl text-{{ $stat['color'] }}-500 opacity-60"></i>
+                </div>
+            </a>
+            @endforeach
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                <h3 class="text-xs font-bold text-blue-700 mb-3 uppercase tracking-wider">Distribusi Program per Perusahaan</h3>
+                <div class="h-48"> <canvas id="chartDokumen"></canvas>
+                </div>
             </div>
-            <i class="fa-solid fa-users text-4xl text-blue-500 opacity-80"></i>
-        </div>
-    </a>
 
-    <!-- Total Dokumen QMS -->
-    <a href="{{ route('qms.index') }}" 
-       class="p-5 bg-gray-50 rounded-xl shadow-md border-l-4 border-green-500 hover:bg-green-100 transition">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-gray-500 font-semibold">Total Dokumen QMS</p>
-                <h2 class="text-3xl font-bold text-gray-800 mt-1">{{ $countQms }}</h2>
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex flex-col items-center">
+                <h3 class="text-xs font-bold text-purple-700 mb-3 uppercase tracking-wider text-center w-full">Distribusi Role User</h3>
+                <div class="h-48 w-full flex justify-center"> <canvas id="chartRoles"></canvas>
+                </div>
             </div>
-            <i class="fa-solid fa-file-lines text-4xl text-green-500 opacity-80"></i>
         </div>
-    </a>
 
-    <!-- Total Perusahaan -->
-    <a href="{{ route('companies.index') }}" 
-       class="p-5 bg-gray-50 rounded-xl shadow-md border-l-4 border-indigo-500 hover:bg-indigo-100 transition">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-gray-500 font-semibold">Total Perusahaan</p>
-                <h2 class="text-3xl font-bold text-gray-800 mt-1">{{ $countCompanies }}</h2>
+        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+            <h3 class="text-xs font-bold text-blue-700 mb-3 uppercase tracking-wider">Aktivitas Terbaru</h3>
+            <div class="max-h-40 overflow-y-auto pr-2">
+                <ul class="space-y-2 text-xs text-gray-700">
+                    @foreach ($activities as $activity)
+                        <li class="border-b border-gray-50 pb-1 last:border-0">
+                            <span class="font-bold text-blue-600">{{ $activity->user->name ?? 'System' }}</span>
+                            {{ $activity->description }}
+                            <span class="text-[10px] text-gray-400 italic">({{ $activity->created_at->diffForHumans() }})</span>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
-            <i class="fa-solid fa-building text-4xl text-indigo-500 opacity-80"></i>
         </div>
-    </a>
-
-    <!-- Total Sertifikat -->
-    <a href="{{ route('certificates.index') }}" 
-       class="p-5 bg-gray-50 rounded-xl shadow-md border-l-4 border-yellow-500 hover:bg-yellow-100 transition">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-gray-500 font-semibold">Total Sertifikat</p>
-                <h2 class="text-3xl font-bold text-gray-800 mt-1">{{ $countCertificates }}</h2>
-            </div>
-            <i class="fa-solid fa-certificate text-4xl text-yellow-500 opacity-80"></i>
-        </div>
-    </a>
-
-    <!-- Total Aircraft Program -->
-    <a href="{{ route('aircraft-programs.index') }}" 
-       class="p-5 bg-gray-50 rounded-xl shadow-md border-l-4 border-red-500 hover:bg-red-100 transition">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-gray-500 font-semibold">Total Aircraft Program</p>
-                <h2 class="text-3xl font-bold text-gray-800 mt-1">{{ $countPrograms }}</h2>
-            </div>
-            <i class="fa-solid fa-plane text-4xl text-red-500 opacity-80"></i>
-        </div>
-    </a>
-</div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <!-- Chart Aircraft Program -->
-    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
-        <h3 class="text-xl font-bold text-blue-700 mb-4">
-            Distribusi Aircraft Program per Perusahaan
-        </h3>
-        <canvas id="chartDokumen"></canvas>
     </div>
 
-    <!-- Chart Role User -->
-
-    <div class="bg-gray-50 p-6 rounded-xl shadow-md flex justify-center">
-        <h3 class="text-xl font-bold text-purple-700 mb-4">
-            Distribusi Role User
-        </h3>
-    <div class="w-64 h-64"> <!-- batasi ukuran -->
-        <canvas id="chartRoles"></canvas>
-    </div>
-</div>
-</div>
-
-
-
-
-        <!-- Aktivitas Terbaru -->
-        <div class="bg-gray-50 p-6 rounded-xl shadow-md">
-
-            <h3 class="text-xl font-bold text-blue-700 mb-4">Aktivitas Terbaru</h3>
-            <ul class="space-y-2 text-gray-700">
-                @foreach ($activities as $activity)
-                    <li class="border-b pb-2">
-                        <span class="font-semibold">{{ $activity->user->name ?? 'System' }}</span>
-                        {{ $activity->description }}
-                        <span class="text-sm text-gray-500">({{ $activity->created_at->diffForHumans() }})</span>
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-
-    </div>
     <script>
+        // Opsi Chart agar tidak membesar secara otomatis
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { 
+                    position: 'bottom',
+                    labels: { boxWidth: 10, font: { size: 10 } }
+                }
+            }
+        };
+
         const ctx = document.getElementById('chartDokumen').getContext('2d');
-        const chartDokumen = new Chart(ctx, {
-            type: 'bar', // bisa 'line', 'pie', dll
+        new Chart(ctx, {
+            type: 'bar',
             data: {
                 labels: @json($chartLabels),
                 datasets: [{
-                    label: 'Jumlah Aircraf Program per Perusahaan',
+                    label: 'Jumlah Program',
                     data: @json($chartData),
                     backgroundColor: 'rgba(54, 162, 235, 0.6)',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
                 }]
             },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
+            options: chartOptions
+        });
+
+        const ctxRoles = document.getElementById('chartRoles').getContext('2d');
+        new Chart(ctxRoles, {
+            type: 'doughnut',
+            data: {
+                labels: @json($roleLabels),
+                datasets: [{
+                    data: @json($roleData),
+                    backgroundColor: ['#2563eb','#22c55e','#f59e0b']
+                }]
+            },
+            options: chartOptions
         });
     </script>
-    <script>
-    const ctxRoles = document.getElementById('chartRoles').getContext('2d');
-    new Chart(ctxRoles, {
-        type: 'doughnut',
-        data: {
-            labels: @json($roleLabels), // misalnya ['Admin','Manajemen','Pelanggan']
-            datasets: [{
-                data: @json($roleData),   // jumlah masing-masing role
-                backgroundColor: ['#2563eb','#22c55e','#f59e0b']
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { position: 'bottom' }
-            }
-        }
-    });
-</script>
 @endsection
