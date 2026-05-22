@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use App\Models\Wiki;
 use App\Models\Knowledge;
@@ -41,7 +42,7 @@ class GlobalSearchController extends Controller
                         'type' => 'Wiki',
                         'icon' => '📘',
                         'title' => $item->title,
-                        'description' => strip_tags(\Str::limit($item->content, 120)),
+                        'description' => strip_tags(str($item->content)->limit(120)),
                         'url' => route('wiki.show', $item->id),
                         'date' => $item->created_at,
                     ];
@@ -63,7 +64,7 @@ class GlobalSearchController extends Controller
                         'type' => 'Knowledge',
                         'icon' => '📂',
                         'title' => $item->title,
-                        'description' => \Str::limit($item->description, 120),
+                        'description' => str($item->description)->limit(120),
                         'url' => route('knowledge.show', $item->id),
                         'date' => $item->created_at,
                     ];
@@ -120,10 +121,10 @@ class GlobalSearchController extends Controller
             */
 
             /*
- |--------------------------------------------------------------------------
- | ENGINEERING ORDER
- |--------------------------------------------------------------------------
- */
+            |--------------------------------------------------------------------------
+            | ENGINEERING ORDER
+            |--------------------------------------------------------------------------
+            */
 
 
             /*
@@ -141,7 +142,7 @@ class GlobalSearchController extends Controller
                         'type' => 'Info',
                         'icon' => '📰',
                         'title' => $item->title,
-                        'description' => \Str::limit(strip_tags($item->content), 120),
+                        'description' => str(strip_tags($item->content))->limit(120),
                         'url' => route('infos.edit', $item->id),
                         'date' => $item->created_at,
                     ];
