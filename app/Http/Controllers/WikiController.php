@@ -5,21 +5,58 @@ namespace App\Http\Controllers;
 use App\Models\Wiki;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class WikiController extends Controller
 {
     // Tampilkan daftar wiki
-    public function index()
+    public function index(Request $request)
     {
-        // pelanggan hanya bisa lihat published
+        $query = Wiki::query();
+
+        // pelanggan hanya lihat published
         if (auth()->user()->role === 'pelanggan') {
-    $wikis = Wiki::where('status','published')->latest()->paginate(10);
-} else {
-    $wikis = Wiki::latest()->paginate(10);
-}
+            $query->where('status', 'published');
+        }
 
+        // search
+        if ($request->search) {
+            $query->where(function ($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->search . '%')
+                    ->orWhere('content', 'like', '%' . $request->search . '%')
+                    ->orWhere('tags', 'like', '%' . $request->search . '%');
+            });
+        }
 
-        return view('modules.feature.wiki.index', compact('wikis'));
+        // filter category
+        if ($request->category) {
+            $query->where('category', $request->category);
+        }
+
+        $wikis = $query->latest()->paginate(9);
+
+        // categories
+        $categories = Wiki::select('category')
+            ->distinct()
+            ->whereNotNull('category')
+            ->pluck('category');
+
+        // recent updates
+        $recentWikis = Wiki::latest()
+            ->limit(5)
+            ->get();
+
+        // popular
+        $popularWikis = Wiki::orderByDesc('views')
+            ->limit(5)
+            ->get();
+
+        return view('modules.feature.wiki.index', compact(
+            'wikis',
+            'categories',
+            'recentWikis',
+            'popularWikis'
+        ));
     }
 
     // Form tambah wiki
@@ -32,10 +69,10 @@ class WikiController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title'   => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'content' => 'required',
-            'category'=> 'nullable|string',
-            'tags'    => 'nullable|string',
+            'category' => 'nullable|string',
+            'tags' => 'nullable|string',
         ]);
 
         $data['slug'] = Str::slug($data['title']);
@@ -44,19 +81,38 @@ class WikiController extends Controller
 
         Wiki::create($data);
 
-        return redirect()->route('wiki.index')->with('success','Wiki berhasil dibuat');
+        return redirect()->route('wiki.index')->with('success', 'Wiki berhasil dibuat');
     }
 
     // Detail wiki
-   public function show(Wiki $wiki)
-{
-    // pelanggan hanya boleh lihat published
-    if (auth()->user()->role === 'pelanggan' && $wiki->status !== 'published') {
-        abort(403, 'Anda tidak punya akses');
-    }
+    public function show(Wiki $wiki)
+    {
+        // pelanggan hanya boleh lihat published
+        if (auth()->user()->role === 'pelanggan' && $wiki->status !== 'published') {
+            abort(403, 'Anda tidak punya akses');
+        }
 
-    return view('modules.feature.wiki.show', compact('wiki'));
-}
+        // tambah views
+        $wiki->increment('views');
+
+        // related articles
+        $relatedWikis = Wiki::where('category', $wiki->category)
+            ->where('id', '!=', $wiki->id)
+            ->latest()
+            ->limit(5)
+            ->get();
+
+        // reading time
+        $readingTime = ceil(
+            str_word_count(strip_tags($wiki->content)) / 200
+        );
+
+        return view('modules.feature.wiki.show', compact(
+            'wiki',
+            'relatedWikis',
+            'readingTime'
+        ));
+    }
 
 
     // Form edit wiki
@@ -66,55 +122,58 @@ class WikiController extends Controller
     }
 
     // Update wiki
-   public function update(Request $request, Wiki $wiki)
-{
-    // Validasi input
-    $data = $request->validate([
-        'title'   => 'required|string|max:255|unique:wikis,title,' . $wiki->id,
-        'content' => 'required',
-        'category'=> 'nullable|string',
-        'tags'    => 'nullable|string',
-        'status'  => 'required|in:draft,review,published,archived',
-    ]);
+    public function update(Request $request, Wiki $wiki)
+    {
+        // Validasi input
+        $data = $request->validate([
+            'title' => 'required|string|max:255|unique:wikis,title,' . $wiki->id,
+            'content' => 'required',
+            'category' => 'nullable|string',
+            'tags' => 'nullable|string',
+            'status' => 'required|in:draft,review,published,archived',
+        ]);
 
-    // Role based workflow
-    if (auth()->user()->role === 'inspektor' && $data['status'] !== 'review') {
-        return back()->withErrors('Inspektor hanya bisa kirim ke review');
+        // Role based workflow
+        if (auth()->user()->role === 'inspektor' && $data['status'] !== 'review') {
+            return back()->withErrors('Inspektor hanya bisa kirim ke review');
+        }
+        if (auth()->user()->role === 'pelanggan') {
+            abort(403, 'Pelanggan tidak boleh edit');
+        }
+
+        // Simpan versi lama sebelum update
+        $wiki->versions()->create([
+            'title' => $wiki->title,
+            'category' => $wiki->category,
+            'tags' => $wiki->tags,
+            'content' => $wiki->content,
+            'status' => $wiki->status,
+            'edited_by' => auth()->id(),
+            'edited_at' => now(),
+        ]);
+
+        // Update metadata
+        $data['slug'] = Str::slug($data['title']);
+        $data['updated_by'] = auth()->id();
+        if ($data['status'] === 'review')
+            $data['reviewed_at'] = now();
+        if ($data['status'] === 'published')
+            $data['published_at'] = now();
+        if ($data['status'] === 'archived')
+            $data['archived_at'] = now();
+
+        // Update wiki
+        $wiki->update($data);
+
+        // Audit log
+        $wiki->logs()->create([
+            'action' => 'update',
+            'user_id' => auth()->id(),
+            'notes' => 'Wiki diperbarui',
+        ]);
+
+        return redirect()->route('wiki.show', $wiki)->with('success', 'Wiki berhasil diperbarui');
     }
-    if (auth()->user()->role === 'pelanggan') {
-        abort(403, 'Pelanggan tidak boleh edit');
-    }
-
-    // Simpan versi lama sebelum update
-    $wiki->versions()->create([
-        'title'     => $wiki->title,
-        'category'  => $wiki->category,
-        'tags'      => $wiki->tags,
-        'content'   => $wiki->content,
-        'status'    => $wiki->status,
-        'edited_by' => auth()->id(),
-        'edited_at' => now(),
-    ]);
-
-    // Update metadata
-    $data['slug'] = Str::slug($data['title']);
-    $data['updated_by'] = auth()->id();
-    if ($data['status'] === 'review')    $data['reviewed_at']  = now();
-    if ($data['status'] === 'published') $data['published_at'] = now();
-    if ($data['status'] === 'archived')  $data['archived_at']  = now();
-
-    // Update wiki
-    $wiki->update($data);
-
-    // Audit log
-    $wiki->logs()->create([
-        'action'  => 'update',
-        'user_id' => auth()->id(),
-        'notes'   => 'Wiki diperbarui',
-    ]);
-
-    return redirect()->route('wiki.show', $wiki)->with('success', 'Wiki berhasil diperbarui');
-}
 
     // Hapus wiki
     public function destroy(Wiki $wiki)
@@ -127,7 +186,7 @@ class WikiController extends Controller
             'notes' => 'Wiki dihapus',
         ]);
 
-        return redirect()->route('wiki.index')->with('success','Wiki berhasil dihapus');
+        return redirect()->route('wiki.index')->with('success', 'Wiki berhasil dihapus');
     }
 
     // Aksi khusus workflow
@@ -145,7 +204,7 @@ class WikiController extends Controller
             'notes' => 'Wiki masuk review',
         ]);
 
-        return back()->with('success','Wiki masuk review');
+        return back()->with('success', 'Wiki masuk review');
     }
 
     public function publish(Wiki $wiki)
@@ -162,7 +221,7 @@ class WikiController extends Controller
             'notes' => 'Wiki dipublish',
         ]);
 
-        return back()->with('success','Wiki dipublish');
+        return back()->with('success', 'Wiki dipublish');
     }
 
     public function archive(Wiki $wiki)
@@ -179,6 +238,22 @@ class WikiController extends Controller
             'notes' => 'Wiki diarsipkan',
         ]);
 
-        return back()->with('success','Wiki diarsipkan');
+        return back()->with('success', 'Wiki diarsipkan');
+    }
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('file')) {
+
+            $path = $request->file('file')
+                ->store('wiki-attachments', 'public');
+
+            return response()->json([
+                'url' => asset('storage/' . $path)
+            ]);
+        }
+
+        return response()->json([
+            'error' => 'Upload gagal'
+        ], 400);
     }
 }

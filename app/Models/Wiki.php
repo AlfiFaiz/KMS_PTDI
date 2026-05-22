@@ -10,34 +10,48 @@ class Wiki extends Model
     use HasFactory;
 
     protected $fillable = [
-    'title',
-    'slug',
-    'category',
-    'tags',
-    'content',
-    'status',
-    'created_by',
-    'updated_by',     // siapa terakhir edit
-    'reviewed_at',    // waktu review
-    'published_at',   // waktu publish
-    'archived_at',    // waktu archive
-];
+        'title',
+        'slug',
+        'category',
+        'tags',
+        'content',
+        'status',
+        'created_by',
+        'updated_by',     // siapa terakhir edit
+        'reviewed_at',    // waktu review
+        'published_at',   // waktu publish
+        'archived_at',    // waktu archive
+    ];
     // Relasi ke user
     public function author()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
     public function editor()
-{
-    return $this->belongsTo(User::class, 'updated_by');
-}
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
     public function versions()
-{
-    return $this->hasMany(WikiVersion::class);
-}
-public function logs()
-{
-    return $this->hasMany(WikiLog::class);
-}
+    {
+        return $this->hasMany(WikiVersion::class)
+            ->latest('edited_at');
+    }
+    public function logs()
+    {
+        return $this->hasMany(WikiLog::class);
+    }
+    public function comments()
+    {
+        return $this->hasMany(WikiComment::class)
+            ->latest();
+    }
+    public function bookmarks()
+    {
+        return $this->hasMany(WikiBookmark::class);
+    }
 
-}  
+    public function helpfuls()
+    {
+        return $this->hasMany(WikiHelpful::class);
+    }
+}

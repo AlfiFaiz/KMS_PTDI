@@ -1,41 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
+
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KMS - Quality & Safety</title>
-     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-100 font-sans">
 
-    <!-- Include Navbar -->
-    @include('layouts.navbar')
+<body class="bg-gray-100 font-sans min-h-full flex flex-col m-0 p-0">
 
-    <!-- Hero Section -->
-<div class="bg-cover bg-center min-h-screen" style="background-image: url('{{ asset('images/hanggar.png') }}');">
-    <div class="bg-black bg-opacity-50 min-h-screen flex flex-col items-center justify-start py-10">
-        <div class="flex items-center justify-center min-h-screen text-center px-4">
-            <div class="max-w-5xl text-white">
-               <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white text-center"
-    style="text-shadow: 2px 2px 6px rgba(0,0,0,0.7);">
-    "When everything seems to be going against you, <br>
-    remember that the airplane takes off against the wind, not with it."
-    <br>
-    - Henry Ford -
-</h1>
-
-                <br>
-                <h2 class="text-2xl sm:text-4xl md:text-4xl font-extrabold shadow-lg">
-                </h2>
-            </div>
-        </div>
+    <div class="w-full block relative" style="z-index: 99999 !important;">
+        @include('layouts.navbar')
     </div>
 
-    <!-- Footer -->
-    @include('layouts.footer')
+    <main class="flex-1 w-full relative flex flex-col z-10">
+
+        <div class="w-full flex-1 bg-cover bg-center relative"
+            style="background-image: url('{{ asset('images/hanggar.png') }}'); min-height: calc(100vh - 140px);">
+
+            <div class="absolute inset-0 bg-black/50 flex items-center justify-center px-4 py-12">
+
+                <div class="max-w-5xl text-center text-white space-y-6">
+                    <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight select-text"
+                        style="text-shadow: 3px 3px 10px rgba(0,0,0,0.85);">
+                        "When everything seems to be going against you, <br class="hidden md:inline">
+                        remember that the airplane takes off against the wind, not with it."
+                    </h1>
+                    <p class="text-lg sm:text-2xl font-bold text-black-400 tracking-wide italic">— Henry Ford —</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <div class="w-full block relative z-20">
+        @include('layouts.footer')
+    </div>
 
 </body>
+
 </html>

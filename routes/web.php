@@ -101,7 +101,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::patch('users/{id}/toggle-active', [UserController::class, 'toggleActive'])->name('users.toggleActive');
     Route::get('users/{id}/detail', [UserController::class, 'detail'])->name('users.detail');
 });
-Route::prefix('admin')->middleware(['auth','role:admin'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('users', UserController::class);
 });
 use App\Http\Controllers\Manajemen\PelangganController;
@@ -168,7 +168,7 @@ Route::get('/work-package/{summary}/download', [App\Http\Controllers\WorkPackage
 
 
 Route::get('/work-package/{program}/summary', [WorkPackageController::class, 'summaryPelanggan'])
-->name('work-package.summary');
+    ->name('work-package.summary');
 
 
 // Audit page
@@ -189,18 +189,61 @@ use App\Http\Controllers\WikiController;
 Route::resource('wiki', WikiController::class);
 
 // route khusus workflow
-Route::post('wiki/{wiki}/review', [WikiController::class,'review'])->name('wiki.review');
-Route::post('wiki/{wiki}/publish', [WikiController::class,'publish'])->name('wiki.publish');
-Route::post('wiki/{wiki}/archive', [WikiController::class,'archive'])->name('wiki.archive');
+Route::post('wiki/{wiki}/review', [WikiController::class, 'review'])->name('wiki.review');
+Route::post('wiki/{wiki}/publish', [WikiController::class, 'publish'])->name('wiki.publish');
+Route::post('wiki/{wiki}/archive', [WikiController::class, 'archive'])->name('wiki.archive');
 
 // route versi
 use App\Http\Controllers\WikiVersionController;
 
-Route::get('wiki/{wiki}/version/{version}', [WikiVersionController::class,'show'])->name('wiki.version.show');
+Route::get('wiki/{wiki}/version/{version}', [WikiVersionController::class, 'show'])->name('wiki.version.show');
 
 Route::post('/upload', function (Illuminate\Http\Request $request) {
     $path = $request->file('file')->store('uploads', 'public');
-    return response()->json(['url' => asset('storage/'.$path)]);
+    return response()->json(['url' => asset('storage/' . $path)]);
 });
+
+use App\Http\Controllers\KnowledgeController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('knowledge', KnowledgeController::class);
+    Route::get('knowledge/{id}/approve', [KnowledgeController::class, 'approve'])->name('knowledge.approve');
+});
+
+Route::post('/knowledge/{id}/comment', [KnowledgeController::class, 'storeComment'])
+    ->name('knowledge.comment.store');
+Route::delete('/comment/{id}', [KnowledgeController::class, 'deleteComment'])
+    ->name('comment.delete');
+
+
+Route::get('/activity-logs', [App\Http\Controllers\ActivityLogController::class, 'index'])
+    ->name('activity-logs.index');
+
+use App\Http\Controllers\WikiCommentController;
+Route::post(
+    '/wiki/{wiki}/comments',
+    [WikiCommentController::class, 'store']
+)->name('wiki.comments.store');
+
+use App\Http\Controllers\WikiInteractionController;
+Route::post(
+    '/wiki/{wiki}/bookmark',
+    [WikiInteractionController::class, 'bookmark']
+)->name('wiki.bookmark');
+
+Route::post(
+    '/wiki/{wiki}/helpful',
+    [WikiInteractionController::class, 'helpful']
+)->name('wiki.helpful');
+
+use App\Http\Controllers\WikiAttachmentController;
+
+Route::post('/wiki/upload', [WikiAttachmentController::class, 'store'])
+    ->name('wiki.upload');
+
+use App\Http\Controllers\GlobalSearchController;
+
+Route::get('/search', [GlobalSearchController::class, 'index'])
+    ->name('global.search');
 
 require __DIR__ . '/auth.php';

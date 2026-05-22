@@ -1,22 +1,55 @@
 @extends('layouts.' . auth()->user()->role)
 
+@section('page-title', 'Edit Wiki')
+
 @section('content')
-<div class="container">
-    @if($errors->any())
-    <div class="bg-red-100 text-red-700 p-2 mb-4">
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+    <div class="min-h-screen bg-gray-50/50 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+
+            <div
+                class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-white p-6 rounded-2xl border border-gray-200/80 shadow-sm">
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+                        Edit Wiki
+                    </h1>
+                    <p class="text-sm text-gray-500 mt-1">
+                        Perbarui dokumentasi knowledge yang sudah ada.
+                    </p>
+                </div>
+                <div>
+                    <a href="{{ route('wiki.show', $wiki) }}"
+                        class="inline-flex items-center justify-center px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-all duration-200 target-burger">
+                        Lihat Artikel
+                    </a>
+                </div>
+            </div>
+
+            @if ($errors->any())
+                <div class="bg-red-50 border border-red-200/60 rounded-2xl p-5 shadow-sm">
+                    <div class="flex items-center space-x-2 text-red-800 font-semibold mb-3">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <span>Validation Error</span>
+                    </div>
+                    <ul class="list-disc list-inside space-y-1 text-sm text-red-700 pl-1">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <div class="bg-white rounded-2xl border border-gray-200/80 shadow-sm p-6 sm:p-8">
+                <form action="{{ route('wiki.update', $wiki) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+
+                    @include('modules.feature.wiki._form')
+                </form>
+            </div>
+
+        </div>
     </div>
-@endif
-    <h1 class="text-xl font-bold mb-4">Edit Wiki</h1>
-<form action="{{ route('wiki.update', $wiki) }}" method="POST">
-    @csrf
-    @method('PUT')
-    @include('modules.feature.wiki._form')
-    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Update</button>
-</form>
-</div>
 @endsection
